@@ -182,7 +182,7 @@ otp_expiry = 3600
 
 # Use a production-ready SMTP server
 [auth.email.smtp]
-enabled = true
+enabled = false
 host = "env(SUPABASE_AUTH_SMTP_HOST)"
 port = "env(SUPABASE_AUTH_SMTP_PORT)"
 user = "env(SUPABASE_AUTH_SMTP_EMAIL)"

@@ -10,6 +10,16 @@ import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { usePathname, useRouter } from "next/navigation";
 import useDiscoverFilters from "@/hooks/useDiscoverFilters";
 
+if (typeof window !== "undefined" && typeof Node !== "undefined") {
+  const originalContains = Node.prototype.contains;
+  Node.prototype.contains = function (otherNode) {
+    if (!otherNode || !(otherNode instanceof Node)) {
+      return false;
+    }
+    return originalContains.call(this, otherNode);
+  };
+}
+
 export const queryClient = new QueryClient();
 
 export default function Providers({ children }: PropsWithChildren) {

@@ -50,15 +50,19 @@ const TvShowPlayer: React.FC<TvShowPlayerProps> = ({
     parseAsInteger.withDefault(0),
   );
 
+  const PLAYER = useMemo(() => players[selectedSource] || players[0], [players, selectedSource]);
+
   usePlayerEvents({
     saveHistory: true,
     metadata: { season: episode.season_number, episode: episode.episode_number },
+    source: PLAYER.source,
+    onError: () => {
+      setSelectedSource((prev) => (prev + 1) % players.length);
+    },
   });
   useDocumentTitle(
     `Play ${props.seriesName} - ${props.seasonName} - ${episode.name} | ${siteConfig.name}`,
   );
-
-  const PLAYER = useMemo(() => players[selectedSource] || players[0], [players, selectedSource]);
 
   return (
     <>

@@ -1,24 +1,17 @@
 import { signUp } from "@/actions/auth";
-import { Google, LockPassword, Mail, User } from "@/utils/icons";
-import { addToast, Button, Divider, Input, Link } from "@heroui/react";
+import { LockPassword, Mail, User } from "@/utils/icons";
+import { addToast, Button, Input, Link } from "@heroui/react";
 import { AuthFormProps } from "./Forms";
 import { RegisterFormSchema } from "@/schemas/auth";
 import PasswordInput from "@/components/ui/input/PasswordInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Turnstile } from "@marsidev/react-turnstile";
-import { useCallback, useState } from "react";
-import { isEmpty } from "@/utils/helpers";
-import { env } from "@/utils/env";
-import GoogleLoginButton from "@/components/ui/button/GoogleLoginButton";
+import { useCallback } from "react";
 
 const AuthRegisterForm: React.FC<AuthFormProps> = ({ setForm }) => {
-  const [isVerifying, setIsVerifying] = useState(false);
-
   const {
     watch,
     register,
-    setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
@@ -33,16 +26,10 @@ const AuthRegisterForm: React.FC<AuthFormProps> = ({ setForm }) => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    if (isEmpty(data.captchaToken)) {
-      setIsVerifying(true);
-      return;
-    }
-
     const { success, message } = await signUp(data);
 
-    if (!success) {
-      setValue("captchaToken", undefined);
-      setIsVerifying(false);
+    if (success) {
+      setForm("login");
     }
 
     return addToast({
@@ -52,20 +39,10 @@ const AuthRegisterForm: React.FC<AuthFormProps> = ({ setForm }) => {
     });
   });
 
-  const onCaptchaSuccess = useCallback(
-    (token: string) => {
-      setValue("captchaToken", token);
-      setIsVerifying(false);
-      onSubmit();
-    },
-    [setValue, setIsVerifying, onSubmit],
-  );
-
   const getButtonText = useCallback(() => {
     if (isSubmitting) return "Signing Up...";
-    if (isVerifying) return "Verifying...";
     return "Sign Up";
-  }, [isSubmitting, isVerifying]);
+  }, [isSubmitting]);
 
   return (
     <div className="flex flex-col gap-5">
@@ -82,7 +59,7 @@ const AuthRegisterForm: React.FC<AuthFormProps> = ({ setForm }) => {
           placeholder="Enter your username"
           variant="underlined"
           startContent={<User className="text-xl" />}
-          isDisabled={isSubmitting || isVerifying}
+          isDisabled={isSubmitting}
         />
         <Input
           {...register("email")}
@@ -94,7 +71,7 @@ const AuthRegisterForm: React.FC<AuthFormProps> = ({ setForm }) => {
           type="email"
           variant="underlined"
           startContent={<Mail className="text-xl" />}
-          isDisabled={isSubmitting || isVerifying}
+          isDisabled={isSubmitting}
         />
         <PasswordInput
           value={watch("password")}
@@ -106,7 +83,7 @@ const AuthRegisterForm: React.FC<AuthFormProps> = ({ setForm }) => {
           label="Password"
           placeholder="Enter your password"
           startContent={<LockPassword className="text-xl" />}
-          isDisabled={isSubmitting || isVerifying}
+          isDisabled={isSubmitting}
         />
         <PasswordInput
           {...register("confirm")}
@@ -117,31 +94,18 @@ const AuthRegisterForm: React.FC<AuthFormProps> = ({ setForm }) => {
           label="Confirm Password"
           placeholder="Confirm your password"
           startContent={<LockPassword className="text-xl" />}
-          isDisabled={isSubmitting || isVerifying}
+          isDisabled={isSubmitting}
         />
-        {isVerifying && (
-          <Turnstile
-            className="flex h-fit w-full items-center justify-center"
-            siteKey={env.NEXT_PUBLIC_CAPTCHA_SITE_KEY}
-            onSuccess={onCaptchaSuccess}
-          />
-        )}
         <Button
           className="mt-3 w-full"
           color="primary"
           type="submit"
           variant="shadow"
-          isLoading={isSubmitting || isVerifying}
+          isLoading={isSubmitting}
         >
           {getButtonText()}
         </Button>
       </form>
-      <div className="flex items-center gap-4 py-2">
-        <Divider className="flex-1" />
-        <p className="text-tiny text-default-500 shrink-0">OR</p>
-        <Divider className="flex-1" />
-      </div>
-      <GoogleLoginButton isDisabled={isSubmitting || isVerifying} />
       <p className="text-small text-center">
         Already have an account?
         <Link
@@ -149,7 +113,7 @@ const AuthRegisterForm: React.FC<AuthFormProps> = ({ setForm }) => {
           onClick={() => setForm("login")}
           size="sm"
           className="cursor-pointer"
-          isDisabled={isSubmitting || isVerifying}
+          isDisabled={isSubmitting}
         >
           Sign In
         </Link>

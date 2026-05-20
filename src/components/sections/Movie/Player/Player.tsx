@@ -36,10 +36,16 @@ const MoviePlayer: React.FC<MoviePlayerProps> = ({ movie, startAt }) => {
     parseAsInteger.withDefault(0),
   );
 
-  usePlayerEvents({ saveHistory: true });
-  useDocumentTitle(`Play ${title} | ${siteConfig.name}`);
-
   const PLAYER = useMemo(() => players[selectedSource] || players[0], [players, selectedSource]);
+
+  usePlayerEvents({
+    saveHistory: true,
+    source: PLAYER.source,
+    onError: () => {
+      setSelectedSource((prev) => (prev + 1) % players.length);
+    },
+  });
+  useDocumentTitle(`Play ${title} | ${siteConfig.name}`);
 
   return (
     <>
