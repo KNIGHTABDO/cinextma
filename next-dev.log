@@ -1,0 +1,101 @@
+nohup: ignoring input
+
+> cinextma@1.0.0 dev
+> next dev --turbopack -H 0.0.0.0
+
+▲ Next.js 16.2.1 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://0.0.0.0:3000
+- Environments: .env.local, .env
+✓ Ready in 434ms
+- Experiments (use with caution):
+  · optimizePackageImports
+  ✓ prefetchInlining
+
+○ Compiling / ...
+ GET / 200 in 20.9s (next.js: 18.3s, proxy.ts: 298ms, application-code: 2.3s)
+ POST / 200 in 74ms (next.js: 5ms, proxy.ts: 9ms, application-code: 59ms)
+  └─ ƒ getUserHistories() in 9ms src/actions/histories.ts
+ GET /auth 200 in 2.5s (next.js: 2.4s, proxy.ts: 8ms, application-code: 46ms)
+ POST /auth 200 in 233ms (next.js: 8ms, proxy.ts: 10ms, application-code: 215ms)
+  └─ ƒ signIn({"email":"aabidahiba@gmail.com","loginPassword":"ABDOKNIGHT2007@abdo"}) in 161ms src/actions/auth.ts
+ GET / 200 in 98ms (next.js: 5ms, proxy.ts: 62ms, application-code: 31ms)
+ GET / 200 in 106ms (next.js: 5ms, proxy.ts: 58ms, application-code: 43ms)
+ POST / 200 in 150ms (next.js: 5ms, proxy.ts: 67ms, application-code: 79ms)
+  └─ ƒ getUserHistories() in 69ms src/actions/histories.ts
+ GET /tv/227191/1/1/player 200 in 3.6s (next.js: 3.5s, proxy.ts: 60ms, application-code: 49ms)
+ POST /tv/227191/1/1/player 200 in 306ms (next.js: 163ms, proxy.ts: 56ms, application-code: 87ms)
+  └─ ƒ getTvShowLastPosition("227191", "1", "1") in 74ms src/actions/histories.ts
+ POST /tv/227191/1/1/player 200 in 184ms (next.js: 10ms, proxy.ts: 85ms, application-code: 89ms)
+  └─ ƒ getTvShowLastPosition("227191", "1", "1") in 72ms src/actions/histories.ts
+Saving history: {
+  event: 'timeupdate',
+  currentTime: 29.943022,
+  duration: 3231.3669999999993,
+  mtmdbId: 227191,
+  mediaType: 'tv',
+  season: 1,
+  episode: 1,
+  mediaId: 227191
+}
+History saved: [
+  {
+    user_id: '0a9763b1-dda2-4f34-b003-cc1f40c5a64a',
+    id: 3,
+    media_id: 227191,
+    type: 'tv',
+    season: 1,
+    episode: 1,
+    duration: 3231.367,
+    last_position: 29.943022,
+    completed: false,
+    adult: false,
+    backdrop_path: '/6OfitF3ifOJmlglcixB3ixnNydW.jpg',
+    poster_path: '/eQWEWCOg5LZLu2AihfMueiHGw1Y.jpg',
+    release_date: '2025-05-21',
+    title: 'Nine Puzzles',
+    vote_average: 7.9,
+    created_at: '2026-05-20T18:51:07.209313+00:00',
+    updated_at: '2026-05-20T19:02:21.489253+00:00'
+  }
+]
+ POST /tv/227191/1/1/player 200 in 529ms (next.js: 167ms, proxy.ts: 57ms, application-code: 305ms)
+  └─ ƒ syncHistory({"currentTime":29.943022,"duration":3231.3669999999993,"episode":1,"...":"5 items not stringified"}, undefined) in 294ms src/actions/histories.ts
+ POST /tv/227191/1/1/player 200 in 167ms (next.js: 10ms, proxy.ts: 77ms, application-code: 80ms)
+  └─ ƒ getTvShowLastPosition("227191", "1", "1") in 68ms src/actions/histories.ts
+○ Compiling /tv/[id] ...
+ GET /tv/227191 200 in 5.1s (next.js: 5.0s, proxy.ts: 54ms, application-code: 47ms)
+Saving history: {
+  event: 'timeupdate',
+  currentTime: 36.793467,
+  duration: 3231.3669999999993,
+  mtmdbId: 227191,
+  mediaType: 'tv',
+  season: 1,
+  episode: 1,
+  mediaId: 227191
+}
+History saved: [
+  {
+    user_id: '0a9763b1-dda2-4f34-b003-cc1f40c5a64a',
+    id: 3,
+    media_id: 227191,
+    type: 'tv',
+    season: 1,
+    episode: 1,
+    duration: 3231.367,
+    last_position: 36.793467,
+    completed: false,
+    adult: false,
+    backdrop_path: '/6OfitF3ifOJmlglcixB3ixnNydW.jpg',
+    poster_path: '/eQWEWCOg5LZLu2AihfMueiHGw1Y.jpg',
+    release_date: '2025-05-21',
+    title: 'Nine Puzzles',
+    vote_average: 7.9,
+    created_at: '2026-05-20T18:51:07.209313+00:00',
+    updated_at: '2026-05-20T19:02:37.019019+00:00'
+  }
+]
+ POST /tv/[id]/[season]/[episode]/player 200 in 437ms (next.js: 170ms, proxy.ts: 61ms, application-code: 206ms)
+  └─ ƒ syncHistory({"currentTime":36.793467,"duration":3231.3669999999993,"episode":1,"...":"5 items not stringified"}, undefined) in 193ms src/actions/histories.ts
+ POST /tv/227191 200 in 732ms (next.js: 195ms, proxy.ts: 73ms, application-code: 463ms)
